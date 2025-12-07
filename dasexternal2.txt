@@ -1,0 +1,421 @@
+6)
+a)
+# Create dataframe
+car_data <- data.frame(
+  CarId   = 1:6,
+  Millage = c(18, 25, 50, 68, 75, 65),
+  Age     = c(1, 2, 2, 3, 4, 5),
+  Price   = c(29, 25, 21, 18, 15, 15)
+)
+
+# Fit Multiple Linear Regression Model
+model <- lm(Price ~ Millage + Age, data = car_data)
+
+# Summary of the model
+summary(model)
+
+# Regression coefficients
+coef(model)
+
+# Predicted values
+predicted <- fitted(model)
+predicted
+
+# Residuals
+residuals(model)
+
+b)
+
+# Read CSV file
+csv_data <- read.csv("C:/Users/YourName/Documents/sample.csv")
+print(csv_data)
+
+# Read TXT file (tab-separated or space-separated)
+txt_data <- read.table("C:/Users/YourName/Documents/sample.txt",
+                       header = TRUE, sep = "\t")
+print(txt_data)
+
+c)
+day_number <- as.integer(readline("Enter a number (1-7): "))
+
+day <- switch(day_number,
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+              "Invalid input")
+
+print(day)
+
+
+
+
+
+
+
+
+7)
+a) 
+# Data
+internal <- c(15,23,18,23,24,22,22,19,19,16,24,11,24,16,23)
+external <- c(49,63,58,60,58,61,60,63,60,52,62,30,59,49,68)
+
+# Fit linear model: external ~ internal
+model <- lm(external ~ internal)
+
+# Regression summary
+summary(model)
+
+# Extract coefficients and residuals
+coef(model)       # intercept and slope
+residuals(model)  # residuals (vector)
+
+# Predicted values
+fitted_vals <- fitted(model)
+
+# Plot: data + regression line
+plot(internal, external, pch=19, xlab="Internal marks", ylab="External marks",
+     main="Linear regression: External ~ Internal")
+abline(model, col = "blue", lwd = 2)
+
+
+
+b)
+# Data
+x <- c(10, 30, 70)
+y <- c(25, 65, 85)
+n <- length(x)
+
+# Means
+mean_x <- mean(x)
+mean_y <- mean(y)
+
+# Deviations
+dx <- x - mean_x
+dy <- y - mean_y
+
+# Manual sums
+sum_dx2  <- sum(dx^2)
+sum_dy2  <- sum(dy^2)
+sum_dxdy <- sum(dx * dy)
+
+# Manual correlation
+r_manual <- sum_dxdy / sqrt(sum_dx2 * sum_dy2)
+r_manual
+
+# --- CORRELATION PLOT (corrplot) ---
+library(corrplot)
+
+# create correlation matrix
+corr_matrix <- matrix(c(1, r_manual,
+                        r_manual, 1),
+                      nrow = 2, byrow = TRUE)
+
+colnames(corr_matrix) <- c("x", "y")
+rownames(corr_matrix) <- c("x", "y")
+
+# plot
+corrplot(corr_matrix, method = "color",
+         addCoef.col = "black",
+         tl.col = "black",
+         number.cex = 1.2,
+         main = "Correlation Plot")
+
+c)
+# Load XML package
+library(XML)
+library(methods)
+
+# Read the XML file
+data <- xmlParse("C:/Users/mohdt/OneDrive/Desktop/students.xml")
+print(data)
+
+# Convert XML to DataFrame
+df <- xmlToDataFrame("C:/Users/mohdt/OneDrive/Desktop/students.xml")
+print(df)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8)
+a)
+# Data
+Age   <- c(1,2,2,3,4,5)
+Price <- c(29,25,21,18,15,15)
+n <- length(Age)
+
+# Means
+mean_x <- sum(Age) / n
+mean_y <- sum(Price) / n
+
+# Deviations
+dx <- Age - mean_x
+dy <- Price - mean_y
+
+# Sums
+Sxx <- sum(dx^2)         # sum (x - xbar)^2
+Sxy <- sum(dx * dy)      # sum (x - xbar)*(y - ybar)
+
+# Coefficients (manual)
+b <- Sxy / Sxx
+a <- mean_y - b * mean_x
+
+# Predictions and residuals
+predicted <- a + b * Age
+residuals <- Price - predicted
+
+# Prediction for Age = 3
+age_new <- 3
+pred_age3 <- a + b * age_new
+cat("\nPredicted Price for Age = 3:", round(pred_age3, 6), "\n")
+plot(Age, Price, pch=19, xlab="Age", ylab="Price", main="Manual LR: Price ~ Age")
+abline(a=a, b=b, col="blue", lwd=2)
+points(age_new,pred_age3, pch=17, col="red", cex=1.4)
+
+
+b)
+# install.packages("dplyr")   # run once if needed
+library(dplyr)
+
+students <- data.frame(
+  id = 1:8,
+  name = c("A","B","C","D","E","F","G","H"),
+  marks = c(78,85,69,92,88,74,81,60),
+  sleep_hrs = c(7,6,8,5,7,7,6,8),
+  study_hrs = c(3,4,2,5,4,3,4,2),
+  gender = c("M","F","M","F","F","M","F","M"),
+  stringsAsFactors = FALSE
+)
+
+# 1. Filter: students with marks > 80
+high <- filter(students, marks > 80)
+
+# 2. Arrange: sort by marks descending
+sorted_desc <- arrange(students, desc(marks))
+
+# 3. Select: pick columns id, name, marks
+selected <- select(students, id, name, marks)
+
+# 4. Summarise: overall mean marks
+mean_marks <- summarise(students, mean_marks = mean(marks))
+
+
+c)
+data(iris)
+# Fit one-way ANOVA: Petal.Length by Species
+aov_model <- aov(Petal.Length ~ Species, data = iris)
+summary(aov_model)
+
+# If ANOVA significant, you can do post-hoc (Tukey)
+TukeyHSD(aov_model)
+
+# Boxplot for visual
+boxplot(Petal.Length ~ Species, data = iris,
+        main = "Petal.Length by Species", ylab = "Petal.Length")
+
+
+
+
+
+
+
+
+
+
+9)
+a)
+# Load mtcars dataset
+data(mtcars)
+
+# ----- BOX PLOT WITH OUTLIERS -----
+boxplot(mtcars$mpg, main = "Boxplot of MPG", ylab = "MPG")
+
+# Identify outliers manually
+Q1 <- quantile(mtcars$mpg, 0.25)
+Q3 <- quantile(mtcars$mpg, 0.75)
+IQR <- Q3 - Q1
+
+lower <- Q1 - 1.5 * IQR
+upper <- Q3 + 1.5 * IQR
+
+outliers <- mtcars$mpg[mtcars$mpg < lower | mtcars$mpg > upper]
+points(outliers, col="red", pch=19)
+legend("topright", legend = "Outliers", col = "red", pch = 19)
+
+# ----- SCATTER PLOT HIGHLIGHTING OUTLIERS -----
+plot(mtcars$wt, mtcars$mpg,
+     main="Scatter Plot of MPG vs Weight",
+     xlab="Weight (1000 lbs)", ylab="MPG",
+     pch=19)
+
+# Highlight outliers in scatter plot
+out_idx <- which(mtcars$mpg < lower | mtcars$mpg > upper)
+points(mtcars$wt[out_idx], mtcars$mpg[out_idx], col="red", pch=19)
+
+
+
+b)
+# Import dataset from the web
+url <- "https://stats.idre.ucla.edu/stat/data/binary.csv"
+admissions <- read.csv(url)
+
+# View dataset
+head(admissions)
+
+# Logistic Regression
+model <- glm(admit ~ gre + gpa + rank, data = admissions, family = binomial)
+
+# Model summary
+summary(model)
+
+
+c)
+# Sample string
+s <- "Hello World from R Language"
+
+# String length
+nchar(s)
+
+# Convert to upper & lower case
+toupper(s)
+tolower(s)
+
+# Substring
+substr(s, 1, 5)      # "Hello"
+
+# Replace text
+sub("World", "Universe", s)
+
+# Split string
+strsplit(s, " ")
+
+# Concatenate
+paste("Hello", "R", sep = "_")
+
+# Trim spaces
+trimws("   R programming   ")
+
+# Detect pattern
+grepl("World", s)
+
+# Extract using regex
+regmatches(s, regexpr("World", s))
+
+
+
+
+
+
+
+
+
+
+
+
+
+10)
+a)
+# Data
+X <- c(121.2, 152.6, 98.4, 171.0, 85.6)
+Y <- c(52, 72, 40, 100, 34)
+n <- length(X)
+
+# 1) Means
+meanX <- sum(X) / n     # 125.76
+meanY <- sum(Y) / n     # 59.6
+
+# 2) Deviations
+dx <- X - meanX
+dy <- Y - meanY
+
+# 3) Sums (Sxx and Sxy)
+Sxx <- sum(dx^2)        # sum (x - xbar)^2
+Sxy <- sum(dx * dy)     # sum (x - xbar)*(y - ybar)
+
+# 4) Coefficients
+b <- Sxy / Sxx          # slope
+a <- meanY - b * meanX  # intercept
+
+# 5) Predictions on training data and residuals
+predicted_train <- a + b * X
+residuals <- Y - predicted_train
+
+# 6) Predict for new rainfall value
+rain_new <- 134.3
+predicted_new <- a + b * rain_new
+cat("Predicted umbrellas for Rain =", rain_new, "mm -->", round(predicted_new, 4), "\n\n")
+
+# 7) Plot: data + manual regression line + predicted point
+plot(X, Y, pch=19, xlab="Rainfall (mm)", ylab="Umbrellas Sold",
+     main="Manual Linear Regression: Umbrellas ~ Rainfall")
+# add manual regression line
+abline(a=a, b=b, col="blue", lwd=2)
+# add predicted point for rain_new
+points(rain_new, predicted_new, pch=17, col="red", cex=1.4)
+
+
+b)
+# loop until we find first value > 90
+vals <- c(12, 45, 78, 91, 34, 105)
+for (v in vals) {
+  if (v > 90) {
+    cat("Found first value >", 90, ":", v, "\n")
+    break   # exit the loop immediately
+  }
+  cat("Checked", v, "\n")
+}
+
+
+# print only odd values, skip even using next
+vals <- 1:10
+for (v in vals) {
+  if (v %% 2 == 0) next   # skip even numbers
+  cat("Odd value:", v, "\n")
+}
+
+
+c)
+# Sample objects
+a <- 10             # numeric (double)
+b <- 10L            # integer
+c <- "123"          # character
+d <- "hello"        # character
+e <- TRUE           # logical
+f <- factor(c("M","F","M"))  # factor
+
+# Inspect
+class(a); typeof(a)
+class(b); typeof(b)
+class(c); typeof(c)
+class(f); typeof(f)
+
+is.numeric(a); is.integer(b); is.character(c); is.factor(f)
+
+# Convert types
+c_num <- as.numeric(c)    # "123" -> 123 (numeric)
+a_char <- as.character(a) # 10 -> "10"
+
+# correct way to convert factor to numeric values (if factor of numbers):
+f2 <- factor(c("1","2","3"))
+as.numeric(as.character(f2))  # safe numeric conversion
+
+# Example: convert a column in dataframe
+df <- data.frame(x = c("1.2","3.4","5.6"), stringsAsFactors = FALSE)
+df$x <- as.numeric(df$x)   # convert to numeric column
+str(df)

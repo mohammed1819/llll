@@ -1,0 +1,374 @@
+11)
+a)
+
+ANOVA partitions total variability into between-group and within-group variability.
+
+A <- c(200, 220, 250)
+B <- c(180, 190, 185)
+C <- c(240, 230, 260)
+
+mean_A <- mean(A)  # 223.33
+mean_B <- mean(B)  # 185
+mean_C <- mean(C)  # 243.33
+
+overall_mean <- mean(c(A, B, C))  # 217.22
+
+n <- 3
+
+#Compute Sum of Squares
+#Between-group (SSB):
+SSB <- n*((mean_A - overall_mean)^2 + (mean_B - overall_mean)^2 + (mean_C - overall_mean)^2)
+#Within-group (SSW):
+SSW <- sum((A - mean_A)^2) + sum((B - mean_B)^2) + sum((C - mean_C)^2)
+SST <- SSB + SSW
+
+
+#Compute Mean Squares and F-statistic
+df_between <- 3 - 1  # 2
+df_within  <- 9 - 3  # 6
+
+MSB <- SSB / df_between
+MSW <- SSW / df_within
+
+F_value <- MSB / MSW ---> this will be same as the anova without aov()
+
+
+b)
+data(iris)
+
+# Histogram of Sepal.Length
+hist(iris$Sepal.Length, main="Histogram of Sepal Length", xlab="Sepal Length", col="lightblue", border="black")
+
+# Bar chart of Species counts
+barplot(table(iris$Species), main="Bar Chart of Iris Species", col=c("red","green","blue"))
+
+# Pie chart of Species counts
+pie(table(iris$Species), main="Pie Chart of Iris Species", col=c("red","green","blue"))
+
+
+c)
+library(rvest)
+
+url <- "https://www.w3schools.com/html/html_tables.asp"
+page <- read_html(url)
+
+# Extract first table
+tbls <- html_nodes(page, "table")
+if (length(tbls) >= 1) {
+  df_table <- html_table(tbls[[1]], fill = TRUE)
+  print(df_table)
+} else {
+  cat("No table found on the page.\n")
+}
+
+# Extract all links
+links <- html_attr(html_nodes(page, "a"), "href")
+head(links)
+
+
+
+
+
+
+
+
+12)
+a)
+data(mtcars)
+
+# Boxplot for mpg
+boxplot(mtcars$mpg, main="Boxplot of mpg (mtcars)", ylab="mpg", col="lightcyan")
+
+# Scatter: mpg vs wt
+plot(mtcars$wt, mtcars$mpg, pch=19, xlab="wt (1000 lb)", ylab="mpg",
+     main="mpg vs wt (mtcars)")
+abline(lm(mpg ~ wt, data=mtcars), col="blue", lwd=2)  # add regression line
+
+# Histogram of horsepower (hp)
+hist(mtcars$hp, breaks=10, main="Histogram of hp (mtcars)", xlab="hp",
+     col="lightgray", border="black")
+
+b)
+
+# Create a list
+my_list <- list(
+  id = 101,
+  name = "Alice",
+  scores = c(89, 92, 75),
+  info = list(gender = "F", enrolled = TRUE)
+)
+
+# Inspect
+str(my_list)
+names(my_list)
+length(my_list)
+
+# Access elements
+my_list$id         # by name
+my_list[["name"]]  # double bracket returns element
+my_list[[3]]       # third element
+my_list$scores[2]  # extract 2nd score
+
+# Aveg element
+my_list$avg <- mean(my_list$scores)
+
+# Remove element
+my_list$info <- NULL
+
+# Apply a function to list elements (lapply/sapply/Map)
+L1 <- list(a = c(1,2,3), b = c(4,5,6))
+L2 <- list(a = c(10,20,30), b = c(1,1,1))
+# element-wise sum preserving list structure
+sum_list <- Map(function(x,y) x + y, L1, L2)
+
+# Unlist to flatten
+vec <- unlist(my_list)
+
+# Append elements
+my_list2 <- append(my_list, list(new = "added"))
+
+
+c)
+# Install package if needed
+# install.packages("e1071")
+
+library(e1071)
+data(iris)
+
+# Split data into training and test (70%-30%)
+set.seed(123)
+idx <- sample(1:nrow(iris), 0.7*nrow(iris))
+train <- iris[idx, ]
+test <- iris[-idx, ]
+
+# Train Naive Bayes model
+nb_model <- naiveBayes(Species ~ ., data=train)
+
+# Predict on test data
+pred <- predict(nb_model, test)
+
+# Confusion matrix
+table(Predicted=pred, Actual=test$Species)
+
+# Accuracy
+accuracy <- mean(pred == test$Species)
+print(paste("Accuracy:", round(accuracy, 4)))
+
+
+
+
+
+
+
+
+13)
+a)
+Given ages:
+
+20,20,20,20,20,20,
+21,21,21,21,
+22,22,22,
+23,23,23,23,
+24,24,
+65
+
+✔ Measures WITH the outlier (65)
+Mean
+
+Total = (20×6) + (21×4) + (22×3) + (23×4) + (24×2) + 65
+= 475
+Mean = 475 / 20 = 23.75
+
+Median
+
+10th value = 21
+11th value = 22
+Median = (21 + 22)/2 = 21.5
+
+Mode
+
+Most frequent value = 20
+
+Outlier
+
+Using IQR rule:
+Q1 = 21, Q3 = 23, IQR = 2
+Upper fence = 23 + 3 = 26
+65 > 26 → 65 is an outlier
+
+ages <- c(20,20,20,20,20,20,21,21,21,21,22,22,22,23,23,23,23,24,24,65)
+
+mean_age <- mean(ages)
+median_age <- median(ages)
+mode_age <- as.numeric(names(sort(table(ages), decreasing=TRUE))[1])
+
+hist(ages, col="lightblue", main="Histogram of Ages")
+abline(v=mean_age, col="red", lwd=2)
+abline(v=median_age, col="blue", lwd=2)
+abline(v=mode_age, col="green", lwd=2)
+
+✔ Measures AFTER removing 65
+
+New total = 475 − 65 = 410
+Count = 19
+
+Mean = 410 / 19 ≈ 21.58
+Median = 10th value = 22
+Mode = 20
+
+✔ Conclusion (write in 2–3 lines)
+
+Removing the outlier 65 reduced the mean from 23.75 to 21.58 because the mean is sensitive to extreme values.
+Median changed slightly (21.5 → 22).
+Mode did not change (still 20).
+Thus, only the mean is heavily affected by outliers.
+
+b)
+
+X <- c(4,5,6,7,8,9)
+Y <- c(17,18,19,20,21,22)
+
+mean_x <- mean(X)
+mean_y <- mean(Y)
+
+Sxx <- sum((X - mean_x)^2)
+Sxy <- sum((X - mean_x) * (Y - mean_y))
+
+b <- Sxy / Sxx
+a <- mean_y - b * mean_x
+
+cat("Slope =", b, "\nIntercept =", a, "\n")
+
+c)
+add <- function(x,y) x+y
+sub <- function(x,y) x-y
+mul <- function(x,y) x*y
+div <- function(x,y) { if(y==0) stop("Division by zero") else x/y }
+
+a <- 12; b <- 5
+session1 <- list(
+  a=a, b=b,
+  sum=add(a,b),
+  diff=sub(a,b),
+  prod=mul(a,b),
+  quot=div(a,b)
+)
+session1
+
+
+
+
+
+
+
+
+
+
+
+14)
+a)
+# Given data
+x <- c(30,32,110,65,55,50,55,48,43,42,45,45,33,34,38,38,34,38,33,32)
+
+# 1. Sort the data
+sorted_x <- sort(x)
+sorted_x
+
+# 2. Five-point summary (min, Q1, median, Q3, max)
+min_val <- min(x)
+Q1 <- quantile(x, 0.25)
+Q2 <- median(x)
+Q3 <- quantile(x, 0.75)
+max_val <- max(x)
+
+min_val; Q1; Q2; Q3; max_val
+
+# 3. Range
+range_val <- max_val - min_val
+range_val
+
+# 4. Interquartile Range (IQR)
+IQR_val <- Q3 - Q1
+IQR_val
+
+# 5. Semi-IQR
+semi_IQR <- IQR_val / 2
+semi_IQR
+
+# 6. Outlier detection using IQR rule
+lower_fence <- Q1 - 1.5 * IQR_val
+upper_fence <- Q3 + 1.5 * IQR_val
+lower_fence; upper_fence
+
+outliers <- x[x < lower_fence | x > upper_fence]
+outliers   # this prints detected outliers
+
+# 7. Display full statistical summary
+summary(x)
+
+# 8. Construct boxplot (five-point summary visually)
+boxplot(x,
+        main = "Boxplot of Salaries",
+        col = "lightblue",
+        ylab = "Per Hour Salary")
+
+
+
+
+b)
+
+# install.packages("readxl")  # run once
+library(readxl)
+
+excel_data <- read_excel("C:/Users/YourName/Desktop/myfile.xlsx")
+print(excel_data)
+
+# install.packages("XML")  # run once
+library(XML)
+
+xml_file <- xmlParse("C:/Users/YourName/Desktop/students.xml")
+print(xml_file)
+
+xml_df <- xmlToDataFrame("C:/Users/YourName/Desktop/students.xml")
+print(xml_df)
+
+
+
+c)
+# Create a list
+my_list <- list(
+  id = 101,
+  name = "Alice",
+  scores = c(89, 92, 75),
+  info = list(gender = "F", enrolled = TRUE)
+)
+
+# Inspect
+str(my_list)
+names(my_list)
+length(my_list)
+
+# Access elements
+my_list$id
+my_list[["name"]]
+my_list[[3]]
+my_list$scores[2]
+
+# Add element
+my_list$avg <- mean(my_list$scores)
+
+# Remove element
+my_list$info <- NULL
+
+# Apply a function to each list element
+L1 <- list(a=c(1,2,3), b=c(4,5,6))
+L2 <- list(a=c(10,20,30), b=c(1,1,1))
+sum_list <- Map(function(x,y) x+y, L1, L2)
+
+# Flatten list
+vec <- unlist(my_list)
+
+# Append
+my_list2 <- append(my_list, list(new="added"))
+
+
