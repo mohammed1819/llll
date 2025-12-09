@@ -1,0 +1,286 @@
+1.a)Write a simple Dart program to understand the language basics
+void main() {
+ var name = "Deepthi";
+ var rollNo = 40;
+ // string interpolation
+ print("My name is $name and my roll number is $rollNo");
+ var num = 15;
+ if (num % 2 == 0) {
+ print("$num is Even");
+ } else {
+ print("$num is Odd");
+ }
+ // Loop example
+ print("Numbers from 1 to 5:");
+ for (int i = 1; i <= 5; i++) {
+ print(i);
+ }
+ // Function example
+ int sum(int a, int b) { return a + b; }
+ var result = sum(10, 20);
+ print("The sum of 10 and 20 is $result");
+}
+ b) Write simple Flutter app to displays “Hello World” in the middle of 
+the screen.
+import 'package:flutter/material.dart';
+void main() {
+ runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ home: Scaffold(
+ body: Center(
+ child: Text(
+ 'Hello World',
+ style: TextStyle(fontSize: 24),
+ ),
+ ),
+ ),
+ );
+ }
+}
+2.a) Explore various Flutter widgets (Text, Image, Container, etc.).
+import 'package:flutter/material.dart';
+void main() {
+ runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ home: Scaffold(
+ body: Center(
+ child: Column(
+ mainAxisAlignment: MainAxisAlignment.center,
+ children: [
+ // Text widget
+ Text(
+ 'Hello, Flutter!',
+ style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+ ),
+ // Container with background color
+ Container(
+ margin: EdgeInsets.all(16),
+ padding: EdgeInsets.all(8),
+ color: Colors.blueAccent,
+ child: Text(
+ 'Inside a Container',
+ style: TextStyle(color: Colors.white),
+ ),
+ ),
+ // Image widget
+ Image.network(
+ 'https://flutter.github.io/assets-for-api docs/assets/widgets/owl.jpg',
+ height: 150,
+ ),
+ ],
+ ),
+ ),
+ ),
+ );
+ }
+}
+ b) Implement different layout structures using Row, Column, and Stack 
+widgets.  
+ import 'package:flutter/material.dart';
+
+ void main() => runApp(const MyApp());
+
+ class MyApp extends StatelessWidget {
+ const MyApp({super.key});
+
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ 
+home: Scaffold(
+body: Center(
+child: Column(
+ mainAxisSize: MainAxisSize.min,
+ children: [
+ // ROW
+ const Text('ROW (left → right)',
+ style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+ const SizedBox(height: 8),
+ Row(
+ mainAxisSize: MainAxisSize.min,
+ children: [
+ Container(width: 40, height: 40, color: Colors.red),
+ const SizedBox(width: 8),
+ Container(width: 40, height: 40, color: Colors.green),
+ const SizedBox(width: 8),
+ Container(width: 40, height: 40, color: Colors.blue),
+ ],
+ ),
+ const SizedBox(height: 24),
+ // COLUMN
+ const Text('COLUMN (top → bottom)',
+ style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+ const SizedBox(height: 8),
+ Column(
+ mainAxisSize: MainAxisSize.min,
+ children: [
+ Container(width: 120, height: 30, color: Colors.orange),
+ const SizedBox(height: 8),
+ Container(width: 120, height: 30, color: Colors.purple),
+ const SizedBox(height: 8),
+ Container(width: 120, height: 30, color: Colors.teal),
+ ],
+ ),
+
+ const SizedBox(height: 24),
+
+ // STACK
+ const Text('STACK (overlap)',
+ style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+ const SizedBox(height: 8),
+ Stack(
+ alignment: Alignment.center,
+ children: [
+ Container(width: 120, height: 120, color: Colors.red),
+ Container(width: 80, height: 80, color: Colors.green),
+ Container(width: 40, height: 40, color: Colors.blue),
+ const Text('Top', style: TextStyle(fontWeight: 
+ FontWeight.bold)),
+ ],
+ ),
+ ],
+ ),
+ ),
+ ),
+ );
+}
+}
+3.a) Design a responsive UI that adapts to different screen sizes.
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ home: Scaffold(
+ body: LayoutBuilder(
+ builder: (context, c) => Center(
+ child: Text(
+ 'AIML',
+ style: TextStyle(
+ fontSize: c.maxWidth * 0.1, color: Colors.blue),
+ ),
+ ),
+ ),
+ ),
+ );
+ }
+}
+3b) Implement media queries and breakpoints for responsiveness.
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(home: ResponsiveLayout());
+ }
+}
+class ResponsiveLayout extends StatelessWidget {
+ Widget _box(Color c) => Container(color: c, width: 100, height: 100);
+ @override
+ Widget build(BuildContext context) {
+ double w = MediaQuery.of(context).size.width;
+ if (w < 600) {
+ return Scaffold(
+ appBar: AppBar(title: Text('Mobile Layout')),
+ body: Column(
+ mainAxisAlignment: MainAxisAlignment.center,
+ children: [_box(Colors.red), _box(Colors.green), 
+_box(Colors.blue)],
+ ),
+ );
+ } else if (w < 1200) {
+ return Scaffold(
+ appBar: AppBar(title: Text('Tablet Layout')),
+ body: Row(
+ mainAxisAlignment: MainAxisAlignment.center,
+ children: [_box(Colors.red), _box(Colors.green), 
+_box(Colors.blue)],
+ ),
+ );
+ } else {
+ return Scaffold(
+ appBar: AppBar(title: Text('Desktop Layout')),
+ body: GridView.count(
+ crossAxisCount: 3,
+ mainAxisSpacing: 10,
+ crossAxisSpacing: 10,
+ children: [_box(Colors.red), _box(Colors.green), 
+_box(Colors.blue)],
+ ),
+ );
+ }
+ }
+}
+4.a) Implement Stateless widget
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ home: Scaffold(
+ appBar: AppBar(title: Text("Stateless Widget")),
+ body: Center(
+ child: Column(
+ mainAxisAlignment: MainAxisAlignment.center,
+ children: [
+ Icon(Icons.star, color: Colors.red, size: 50),
+ Text(
+ "Hello, I am Stateless!",
+ style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+ ),
+ ],
+ ),
+ ),
+ ),
+ );
+ }
+}
+ 4b) Implement stateful widget
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+class MyApp extends StatefulWidget {
+ @override
+ State<MyApp> createState() => _MyAppState();
+}
+class _MyAppState extends State<MyApp> {
+ bool liked = false; // state variable
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ home: Scaffold(
+ appBar: AppBar(title: Text("Stateful Widget")),
+ body: Center(
+ child: Column(
+ mainAxisAlignment: MainAxisAlignment.center,
+ children: [
+ Icon(
+ liked ? Icons.star : Icons.star_border,
+ color: Colors.orange,
+ size: 60,
+ ),
+ Text(
+ liked ? "You liked this!" : "Press the button 👇",
+ style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+ ),
+ SizedBox(height: 20),
+ ElevatedButton(
+ onPressed: () => setState(() => liked = !liked),
+ child: Text("Toggle"),
+ ),
+ ],
+ ),
+ ),
+ ),
+ );
+ }
+ }
