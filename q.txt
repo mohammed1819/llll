@@ -1,162 +1,0 @@
-
-1. 
-a) Implement the data structures in R -Vectors, Lists.
-b) Illustrate summation, subtraction, multiplication, and division operations on vectors and List .
-c) Plot correlation plot on dataset and visualize by providing an overview on of relationships on iris data.    
-	
-
-2. 
-a) Implement Matrix data structures in R , Write R commands to Matrix sub setting
-b) Implement various matrix manipulation operations(Matrix-addition, substraction, adding rows and columns to matrix)
-c) Find the correlation between two variables. X and Y, with out the predefined function representing Hours Studied and Exam Score for five students:
-
-StudentX (Hours Studied)Y (Exam Score)12602475358046855895
-
-
-
-3. 
-a) Implement DaraFrame in R. 
-b) Illustrate how to get the structure and descriptive statistics of variables in a dataframe. Illustrate adding a row and columns to dataframe.
-c) Apply K-means on iris dataset and show cluster centers.
-      
-
-
-4. 
-a) Write a R Script to display Fibonacci series up to a given number using  a function.
-b) Illustarate the subsetting and aggregating functions on a sample data in R.
-c) Write an R program to illustrate Linear Regression considering the below dataframe and what are the regression coefficients and the residuals. Plot the model.
-
-Internal marks152318232422221919162411241623External marks496358605861606360526230594968
-
-
-5. 
-a) Write an R script, to create R objects for calculator application 
-b) Write R script for reading  and writing .csv and .txt files  in specific disk location. 
-c) Apply K-means on mtcars dataset and show cluster centers.
-
-
-6. 
-a) Apply Multiple Linear regression to predict the car price using the below dataset:
-Car IdMillageAgePrice118129225225350221468318575415665515
-b) Write R script for Reading .csv and .txt file in R. 
-c) Use the switch () function to print the day of the week based on user input (number from 1 to 7).
-
-
-
-
-7. 
-a) Write an R program to illustrate Linear Regression considering the below dataframe and what are the regression coefficients and the residuals. Plot the model.
-
-Internal marks152318232422221919162411241623External marks496358605861606360526230594968
-
-b) Find the correlation  for x=c(10,30,70),y=c(25,65,85) with out using predefine  function and plot the correlation plot.
-c) Write a R script for reading XML dataset 
- 
-
-8. 
-a) Write an R program to illustrate Linear Regression considering suitable CSV file as below with out using the in-build function and predict the price of a car with an age of 3 years. Plot the model.
-
-Car IdAgePrice112922253221431854156515
-b) Write a R program which perform basic data wrangling operations such as filter, arrange, selecting and summarizing operations on a sample data set.
-c) Analysis of covariance(ANOVA) on iris data using predefined function.
-
-
-
-
-
-
-
-
-
-
-
-
-9)
-a) Write a R script to draw box plot and scatter plots for mtcars  dataset and highlight the outliers in each.
-b) Import a data  from web.name the data set and perform logistic regression to find out relationship between variables that are affecting the admission of a student in a institute based on student GRE score, GPA obtained, rank.
-c) Write a R script to demonstrate string related functions.
-
-
-
-10.
-a) Write an R program to illustrate Linear Regression considering suitable CSV file as below with out using the in-build function and predict the number of umbrellas sold for a rain fll of 134.3mm.Plot the model.
-
-Year RainfallUmbrellas Sold2015121.2522016152.672201798.4402018171100201985.634
-b) Illustrate the break and continue statements usage with a R script
-c) Illustrate how to know the data type of different objects and how to check the data type of a variable and convert between different data type.
-
-
-11.
-a) Analysis of covariance(ANOVA) with out using the predefined function on the  Given data
-A =(200, 220, 250)
-B =(180, 190, 185)
-C =(240, 230, 260) 
-b) Write a R script to draw histogram, bar chart and pie chart for iris dataset
-c) Write a R program to implement web scrapping on a website .
-      
-      
-12.
-a) Create box, scatter and histogram for cars dat set.
-b) Implement List data structures in R and various list operations.
-c) Write a R program to implement Naïve Bayes classification on IRIS Dataset.
-
-
-
-
-
-
-
-13.
-a) Find the mean, the median, and the mode of the sample ages of students in a class. Are there any outliers? With the help of histogram display the distributions of data along with locations of mean, median, mode.  Remove the data entry 65 from the data set and then calculate the mean, median and the mode. Does the absence of the outlier change the measures? If yes, justify your answer. 
-Age of students in a class 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 22, 22, 22, 23,23, 23, 23, 24, 24, 65 
-b) Calculate the regression coefficients for the following data.
-
-X456789Y171819202122
-c) Write an R script to create R objects for calculator application.
-
-
-
-
-14.
-
-a) The following sample data set lists the per hour salaries of 20 employees. 
-Construct the five-point summary of the sample data set 
-The sample data is as follows: 
-30, 32, 110, 65, 55, 50, 55, 48, 43, 42, 45, 45, 33, 34, 38, 38, 34, 38, 33, 32 Analyze the data set and apply the five-point summary methods to calculate the following: 
-i. First quartile, Second quartile, Third quartile 
-ii. Range 
-iii. Interquartile range 
-iv. Semi interquartile range 
-v. Detect the outliers if any
-vi. Construct a box plot for displaying the five-point summary 
-
-b) Write a R script for Reading Excel data sheet and XML file in R. 
-c) Implement List data structures in R and various list operations.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-15.
-a) Build  a KNN classifier in R on the below data set and calculate accuracy.
-NameAgeGenderSportAjay320FootballMark400NeitherSara161CricketZaira341CricketSachin340NeitherRahul400CricketPooja201NeitherSmith150CricketLaxmi551FootballMichael150Football
-Predict the Sport of a person with age= 25 and Gender= Male.
-b) Write a R script to perform the following Data Wrangling operations: mutate, pivot_longer, pivot_wider or gather, spread , removing missing values, removing duplicates o a sample data set.
-c) Compute correlation and covariance between two numeric vectors.
-  
-
-
-
-
