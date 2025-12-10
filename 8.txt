@@ -1,0 +1,69 @@
+8a) Add animations to UI elements using Flutter's animation framework.​
+import 'package:flutter/material.dart';
+ 
+void main() {
+ runApp(MaterialApp(home: SimpleAnimation()));
+}
+ 
+class SimpleAnimation extends StatefulWidget {
+ @override
+ _SimpleAnimationState createState() => _SimpleAnimationState();
+}
+ 
+class _SimpleAnimationState extends State<SimpleAnimation> {
+ bool big = false; // toggle
+ 
+ @override
+ Widget build(BuildContext context) {
+   return Scaffold(
+     appBar: AppBar(title: Text("Simple Animation")),
+     body: Center(
+       child: AnimatedContainer(
+         duration: Duration(seconds: 1),
+         width: big ? 150 : 70,
+         height: big ? 150 : 70,
+         color: big ? Colors.blue : Colors.red,
+       ),
+     ),
+     floatingActionButton: FloatingActionButton(
+       onPressed: () {
+         setState(() { big = !big; });
+       },
+       child: Icon(Icons.play_arrow),
+     ),
+   );
+ }
+}
+ 
+ 
+8b)
+import 'package:flutter/material.dart';
+ 
+void main() => runApp(MaterialApp(home: FadeExample()));
+ 
+class FadeExample extends StatefulWidget {
+ @override
+ _FadeExampleState createState() => _FadeExampleState();
+}
+ 
+class _FadeExampleState extends State<FadeExample> {
+ bool visible = true;
+ 
+ @override
+ Widget build(BuildContext context) {
+   return Scaffold(
+     appBar: AppBar(title: Text("Fade Animation")),
+     body: Center(
+       child: AnimatedOpacity(
+         duration: Duration(seconds: 1),
+         opacity: visible ? 1.0 : 0.2,
+         child: Container(width: 100, height: 100, color: Colors.blue),
+       ),
+     ),
+     floatingActionButton: FloatingActionButton(
+       onPressed: () => setState(() => visible = !visible),
+       child: Icon(Icons.play_arrow),
+     ),
+   );
+ }
+}
