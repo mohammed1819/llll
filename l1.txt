@@ -1,0 +1,408 @@
+1a)
+import numpy as np
+
+# Create a 1D array of 10 elements (0 to 9)
+arr = np.arange(10)
+
+print("Original Array:")
+print(arr)
+
+# -------------------------
+# Indexing
+# -------------------------
+print("\nIndexing Examples:")
+print("First element:", arr[0])
+print("Last element:", arr[-1])
+print("Element at index 4:", arr[4])
+
+# -------------------------
+# Slicing
+# -------------------------
+print("\nSlicing Examples:")
+print("Elements from index 2 to 5:", arr[2:6])
+print("First 5 elements:", arr[:5])
+print("Last 3 elements:", arr[-3:])
+
+# -------------------------
+# Modifying specific elements
+# -------------------------
+arr[0] = 100        # Modify first element
+arr[3:6] = 50       # Modify a slice (indexes 3,4,5)
+
+print("\nModified Array:")
+print(arr)
+
+
+
+
+
+
+
+2a)
+import pandas as pd
+
+# -------------------------
+# Create a Pandas Series
+# -------------------------
+series_data = pd.Series([10, 20, 30, 40, 50], name="Numbers")
+
+print("Pandas Series:")
+print(series_data)
+
+# -------------------------
+# Create a Pandas DataFrame
+# -------------------------
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eva"],
+    "Age": [25, 30, 35, 40, 28],
+    "Salary": [50000, 60000, 70000, 80000, 52000]
+}
+
+df = pd.DataFrame(data)
+
+print("\nPandas DataFrame:")
+print(df)
+
+# -------------------------
+# head() operation
+# -------------------------
+print("\nFirst 5 rows using head():")
+print(df.head())
+
+# -------------------------
+# info() operation
+# -------------------------
+print("\nDataFrame Info:")
+df.info()
+
+# -------------------------
+# describe() operation
+# -------------------------
+print("\nStatistical Summary using describe():")
+print(df.describe())
+
+
+
+
+
+
+
+
+
+
+3a)
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.datasets import load_iris
+
+# Load Iris dataset
+iris = load_iris()
+
+# Create DataFrame
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+# Histogram - Sepal Length
+plt.figure()
+plt.hist(df["sepal length (cm)"])
+plt.title("Histogram of Sepal Length")
+plt.xlabel("Sepal Length")
+plt.ylabel("Frequency")
+plt.show()
+
+# Histogram - Sepal Width
+plt.figure()
+plt.hist(df["sepal width (cm)"])
+plt.title("Histogram of Sepal Width")
+plt.xlabel("Sepal Width")
+plt.ylabel("Frequency")
+plt.show()
+
+# Histogram - Petal Length
+plt.figure()
+plt.hist(df["petal length (cm)"])
+plt.title("Histogram of Petal Length")
+plt.xlabel("Petal Length")
+plt.ylabel("Frequency")
+plt.show()
+
+# Histogram - Petal Width
+plt.figure()
+plt.hist(df["petal width (cm)"])
+plt.title("Histogram of Petal Width")
+plt.xlabel("Petal Width")
+plt.ylabel("Frequency")
+plt.show()
+
+
+# -------------------------
+# Boxplot (Single for All Features)
+# -------------------------
+plt.figure(figsize=(8, 6))
+plt.boxplot(df.values, labels=df.columns)
+plt.title("Boxplot of All Iris Features")
+plt.ylabel("Values")
+plt.show()
+
+
+
+
+4a)
+import numpy as np
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+print(arr[:2,:])
+print(arr[:,:2])
+print(arr[-2:,:])
+print(arr[:,-2:])
+print(arr[-1:,:])
+
+
+
+
+
+
+
+
+5a)
+import pandas as pd
+
+# -------------------------
+# Read CSV file
+# -------------------------
+# Replace 'data.csv' with your actual file name
+df = pd.read_csv("data.csv")
+
+print("Original Data:")
+print(df.head())
+
+# -------------------------
+# Filter rows based on a condition
+# Example: Select rows where Age > 30
+# -------------------------
+filtered_df = df[df["Age"] > 30]
+
+print("\nFiltered Data (Age > 30):")
+print(filtered_df)
+
+# -------------------------
+# Value counting on a selected column
+# Example: Count occurrences in 'Department' column
+# -------------------------
+value_counts = df["Department"].value_counts()
+
+print("\nValue Counts for Department:")
+print(value_counts)
+
+
+
+
+
+
+
+
+
+
+
+6a)
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.datasets import load_iris
+
+# Load Iris dataset
+iris = load_iris()
+
+# Create DataFrame
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+# Create 2×2 subplots
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+
+# -------------------------
+# Top-left (0,0)
+# -------------------------
+axes[0, 0].hist(df["sepal length (cm)"], bins=15, edgecolor='black')
+axes[0, 0].set_title("Sepal Length")
+axes[0, 0].set_xlabel("Value")
+axes[0, 0].set_ylabel("Frequency")
+
+# -------------------------
+# Top-right (0,1)
+# -------------------------
+axes[0, 1].hist(df["sepal width (cm)"], bins=15, edgecolor='black')
+axes[0, 1].set_title("Sepal Width")
+axes[0, 1].set_xlabel("Value")
+axes[0, 1].set_ylabel("Frequency")
+
+# -------------------------
+# Bottom-left (1,0)
+# -------------------------
+axes[1, 0].hist(df["petal length (cm)"], bins=15, edgecolor='black')
+axes[1, 0].set_title("Petal Length")
+axes[1, 0].set_xlabel("Value")
+axes[1, 0].set_ylabel("Frequency")
+
+# -------------------------
+# Bottom-right (1,1)
+# -------------------------
+axes[1, 1].hist(df["petal width (cm)"], bins=15, edgecolor='black')
+axes[1, 1].set_title("Petal Width")
+axes[1, 1].set_xlabel("Value")
+axes[1, 1].set_ylabel("Frequency")
+
+# Adjust layout
+plt.tight_layout()
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+7a)
+import numpy as np
+
+# Create a 1D NumPy array
+arr = np.array([10, 20, 30, 40, 50, 60, 70, 80])
+
+print("Original Array:")
+print(arr)
+
+# -------------------------
+# Slicing
+# -------------------------
+# Get elements from index 2 to 5
+slice_arr = arr[2:6]
+print("\nSliced Array (index 2 to 5):")
+print(slice_arr)
+
+# Get every second element
+slice_step = arr[::2]
+print("\nSliced Array (every 2nd element):")
+print(slice_step)
+
+# -------------------------
+# Boolean Indexing
+# -------------------------
+# Get elements greater than 40
+bool_index = arr[arr > 40]
+print("\nElements greater than 40 (Boolean Indexing):")
+print(bool_index)
+
+# Get elements that are even
+even_elements = arr[arr % 2 == 0]
+print("\nEven Elements (Boolean Indexing):")
+print(even_elements)
+
+
+
+
+
+
+
+
+
+
+
+8a)
+LabelEncoder converts categorical text into numeric codes.
+
+For example:
+
+"Finance" → 0
+
+"HR" → 1
+
+"IT" → 2
+
+program:
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+# Sample DataFrame
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eva"],
+    "Department": ["HR", "IT", "IT", "Finance", "HR"]
+}
+
+df = pd.DataFrame(data)
+print("Original DataFrame:")
+print(df)
+
+# Initialize LabelEncoder
+le = LabelEncoder()
+
+# Apply Label Encoding on 'Department' column
+df["Department_encoded"] = le.fit_transform(df["Department"])
+
+print("\nDataFrame after Label Encoding:")
+print(df)
+
+
+
+
+
+
+
+
+
+
+
+9a)
+import matplotlib.pyplot as plt
+
+data = [1,2,3,4,5,6,7,8,9,10,101,113]
+
+plt.figure(figsize=(8,6))
+plt.boxplot(data)
+plt.ylabel("values")
+plt.title("Box plot for detecting outliers")
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+
+
+
+10a)
+import pandas as pd
+
+# Create the Play Tennis Dataset
+data = {
+    "Outlook": ["Sunny", "Sunny", "Overcast", "Rain", "Rain", "Rain", "Overcast", "Sunny", "Sunny", "Rain", "Sunny", "Overcast", "Overcast", "Rain"],
+    "Temperature": ["Hot", "Hot", "Hot", "Mild", "Cool", "Cool", "Cool", "Mild", "Cool", "Mild", "Mild", "Mild", "Hot", "Mild"],
+    "Humidity": ["High", "High", "High", "High", "Normal", "Normal", "Normal", "High", "Normal", "Normal", "Normal", "High", "Normal", "High"],
+    "Wind": ["Weak", "Strong", "Weak", "Weak", "Weak", "Strong", "Strong", "Weak", "Weak", "Weak", "Strong", "Strong", "Weak", "Strong"],
+    "PlayTennis": ["No", "No", "Yes", "Yes", "Yes", "No", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "No"]
+}
+
+df = pd.DataFrame(data)
+
+# Basic exploration
+print("First 5 rows:")
+print(df.head(), "\n")
+
+print("Info about dataset:")
+print(df.info(), "\n")
+
+print("Summary statistics (describe):")
+print(df.describe(include='all'), "\n")  # include='all' to describe categorical columns
+
+# Conditional filtering
+# Example: All days where Outlook is Sunny and PlayTennis is Yes
+filtered_df = df[(df["Outlook"] == "Sunny") & (df["PlayTennis"] == "Yes")]
+print("Filtered rows (Sunny & PlayTennis=Yes):")
+print(filtered_df)
