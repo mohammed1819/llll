@@ -1,0 +1,311 @@
+1)bfs 
+def bfs_custom(graph, node, target):
+    queue = [node]
+    visited = [node]
+    path_to_target = []
+    full_traversal = []
+    found = False
+    while queue:
+        current = queue.pop(0)
+        full_traversal.append(current)
+        if not found:
+            path_to_target.append(current)
+            if current == target:
+                found = True
+        for neighbor in graph.get(current, []):
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+    return path_to_target, full_traversal
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': ['B'],
+    'E': ['B'],
+    'F': ['C'],
+    'G': ['C']
+}
+
+user_input = input("enter target variables in sequence: ")
+targets = list(user_input)
+print(targets)
+
+# Run BFS for each target separately
+for t in targets:
+    path, full = bfs_custom(graph, 'A', t)
+    print(*path)
+    print(*full)
+
+
+
+
+
+
+2)dfs
+def dfs_custom(graph, start_node, target):
+    stack = [start_node]
+    visited = [] 
+    path_to_target = []
+    full_traversal = []
+    found = False
+    while stack:
+        current = stack.pop()
+        if current not in visited:
+            visited.append(current)
+            full_traversal.append(current)
+            if not found:
+                path_to_target.append(current)
+                if current == target:
+                    found = True
+            for neighbor in reversed(graph.get(current, [])):
+                if neighbor not in visited:
+                    stack.append(neighbor)
+    return path_to_target, full_traversal
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': [],
+    'F': [],
+    'G': []
+}
+
+user_input = input("Enter target variables in sequence: ")
+targets = list(user_input)
+print(targets)
+
+# Run DFS for each target separately
+for t in targets:
+    path, full = dfs_custom(graph, 'A', t)
+    print(*path)
+    print(*full)
+
+
+
+
+
+3)random choice
+import random
+
+def print_board(board):
+    for i in range(0, 9, 3):
+        print(f"| {board[i]} | {board[i+1]} | {board[i+2]} |")
+    print()
+def check_winner(board, player):
+    win_conditions = [(0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6)]
+    for condition in win_conditions:
+        if board[condition[0]] == board[condition[1]] == board[condition[2]] == player:
+            return True
+    return False
+def tic_tac_toe():
+    board = [" " for _ in range(9)]
+    print("Which mode you want to play")
+    print("1: Computer vs player")
+    print("2: player vs player")
+    choice = input("Choice: ")
+    print("\nTIC-TAC-TOE")
+    current_player = "X"
+    for turn in range(9):
+        if choice == "1" and current_player == "O":
+            move = random.choice([i for i, x in enumerate(board) if x == " "])
+            board[move] = "O"
+            print(f"Computer turn: {move + 1}")
+        else:
+            try:
+                move = int(input(f"enter your move (1-9): ")) - 1
+                if board[move] != " ":
+                    print("Spot taken! Try again.")
+                    continue
+                board[move] = current_player
+            except (ValueError, IndexError):
+                print("Invalid input! Enter 1-9.")
+                continue
+        print_board(board)
+        if check_winner(board, current_player):
+            print(f"player ({current_player}) wins.")
+            return
+        current_player = "O" if current_player == "X" else "X"
+    print("It's a draw!")
+tic_tac_toe()
+
+
+
+
+
+4)minimax 
+import math
+def print_board(board):
+    for i in range(0, 9, 3):
+        print(f"| {board[i]} | {board[i+1]} | {board[i+2]} |")
+    print()
+def check_winner(board):
+    win_conditions = [(0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6)]
+    for condition in win_conditions:
+        if board[condition[0]] == board[condition[1]] == board[condition[2]] != " ":
+            return board[condition[0]]
+    if " " not in board:
+        return "Tie"
+    return None
+def minimax(board, is_maximizing):
+    result = check_winner(board)
+    if result == "O": return 1
+    if result == "X": return -1
+    if result == "Tie": return 0
+    if is_maximizing:
+        best_score = -math.inf
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "O"
+                score = minimax(board, False)
+                board[i] = " "
+                best_score = max(score, best_score)
+        return best_score
+    else:
+        best_score = math.inf
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "X"
+                score = minimax(board, True)
+                board[i] = " "
+                best_score = min(score, best_score)
+        return best_score
+def tic_tac_toe():
+    board = [" " for _ in range(9)]
+    print("Which mode you want to play")
+    print("1: Computer vs player")
+    print("2: player vs player")
+    choice = input("Choice: ")
+    print("\nTIC-TAC-TOE")
+    current_player = "X"
+    for turn in range(9):
+        if choice == "1" and current_player == "O":
+            best_score = -math.inf
+            move = -1
+            for i in range(9):
+                if board[i] == " ":
+                    board[i] = "O"
+                    score = minimax(board, False)
+                    board[i] = " "
+                    if score > best_score:
+                        best_score = score
+                        move = i
+            board[move] = "O"
+            print(f"Computer turn: {move + 1}")
+        else:
+            try:
+                move = int(input(f"enter your move (1-9): ")) - 1
+                if board[move] != " ":
+                    print("Spot taken! Try again.")
+                    continue
+                board[move] = current_player
+            except (ValueError, IndexError):
+                print("Invalid input! Enter 1-9.")
+                continue
+        print_board(board)
+        winner = check_winner(board)
+        if winner:
+            if winner == "Tie":
+                print("It's a draw!")
+            else:
+                print(f"player ({winner.lower()}) wins.")
+            return
+        current_player = "O" if current_player == "X" else "X"
+tic_tac_toe()
+
+
+
+
+
+
+
+
+
+5)alpha-beta-pruning
+import math
+def print_board(board):
+    for i in range(0, 9, 3):
+        print(f"| {board[i]} | {board[i+1]} | {board[i+2]} |")
+    print()
+def check_winner(board):
+    win_conditions = [(0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6)]
+    for condition in win_conditions:
+        if board[condition[0]] == board[condition[1]] == board[condition[2]] != " ":
+            return board[condition[0]]
+    if " " not in board:
+        return "Tie"
+    return None
+def minimax_alpha_beta(board, depth, alpha, beta, is_maximizing):
+    result = check_winner(board)
+    if result == "O": return 1
+    if result == "X": return -1
+    if result == "Tie": return 0
+    if is_maximizing:
+        best_score = -math.inf
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "O"
+                score = minimax_alpha_beta(board, depth + 1, alpha, beta, False)
+                board[i] = " "
+                best_score = max(score, best_score)
+                alpha = max(alpha, score)
+                if beta <= alpha:
+                    break 
+        return best_score
+    else:
+        best_score = math.inf
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "X"
+                score = minimax_alpha_beta(board, depth + 1, alpha, beta, True)
+                board[i] = " "
+                best_score = min(score, best_score)
+                beta = min(beta, score)
+                if beta <= alpha:
+                    break 
+        return best_score
+def tic_tac_toe():
+    board = [" " for _ in range(9)]
+    print("Which mode you want to play")
+    print("1: Computer vs player")
+    print("2: player vs player")
+    choice = input("Choice: ")
+    print("\nTIC-TAC-TOE")
+    current_player = "X"
+    for turn in range(9):
+        if choice == "1" and current_player == "O":
+            best_score = -math.inf
+            move = -1
+            for i in range(9):
+                if board[i] == " ":
+                    board[i] = "O"
+                    score = minimax_alpha_beta(board, 0, -math.inf, math.inf, False)
+                    board[i] = " "
+                    if score > best_score:
+                        best_score = score
+                        move = i
+            board[move] = "O"
+            print(f"Computer turn: {move + 1}")
+        else:
+            try:
+                move = int(input(f"enter your move (1-9): ")) - 1
+                if board[move] != " ":
+                    print("Spot taken! Try again.")
+                    continue
+                board[move] = current_player
+            except (ValueError, IndexError):
+                print("Invalid input! Enter 1-9.")
+                continue
+        print_board(board)
+        winner = check_winner(board)
+        if winner:
+            if winner == "Tie":
+                print("It's a draw!")
+            else:
+                print(f"player ({winner.lower()}) wins.")
+            return
+        current_player = "O" if current_player == "X" else "X"
+tic_tac_toe()
