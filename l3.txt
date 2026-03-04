@@ -1,0 +1,475 @@
+1)Create an application to setup node JS environment and display “Hello World.”
+
+install Node.js:
+Install nodejs from https://nodejs.org after installing check
+node -v
+npm -v
+
+create a new project folder
+mkdir hello_node
+cd hello_node
+
+Initialize Node.js application
+npm init -y
+
+create a file app.js
+console.log("Hello world")
+
+run program
+node app.js
+
+output: hello world
+
+//to display helloworld on browser do below steps
+
+install express package
+npm install express
+
+create file called serer.js
+const express=require("express")
+const app=express()
+app.get("/",(req,res)=>{res.send("hello world");
+});
+applisten(3000,()=>{
+console.log("server running on http://localhost:3000");
+});
+
+run:node server.js
+open:http://localhost:3000
+
+
+
+
+
+
+
+
+
+
+2)#Write a Java script to find the factorial of a given number.
+
+const prompt = require("prompt-sync")();
+function fact(n) {
+    
+    if(n==0)
+        return 1;
+    else
+        return n*fact(n-1);
+}
+n=parseInt(prompt("enter any number:"));
+result=fact(n);
+console.log(`${result}`);
+
+
+
+
+
+
+
+
+3)#Write a Java script to find the GCD of a given TWO numbers.
+
+const prompt = require("prompt-sync")();
+function findGCD(a, b) {
+    while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+const num1 = parseInt(prompt("Enter first number: "));
+const num2 = parseInt(prompt("Enter second number: "));
+const result = findGCD(num1, num2);
+console.log(`The GCD of ${num1} and ${num2} is: ${result}`);
+
+
+
+
+
+
+4)
+#Write a Java script to demonstrate functions
+
+function factorial(num){
+    if(num==0){
+        return 1
+    }
+    return num*factorial(num-1);
+}
+console.log(factorial(4))
+
+
+
+
+
+
+
+
+5)
+#Write a Node JS program to perform read, write, append, rename and delete operations on a file.
+
+
+const fs = require('fs');
+fs.writeFileSync('test.txt', 'Initial content');
+console.log('File written');
+
+const data = fs.readFileSync('test.txt', 'utf8');
+console.log('Read content:', data);
+
+fs.appendFileSync('test.txt', '\nAppended content');
+console.log('Content appended');
+
+fs.renameSync('test.txt', 'new_name.txt');
+console.log('File renamed');
+
+fs.unlinkSync('new_name.txt');
+console.log('File deleted');
+
+(or)
+const fs = require('fs').promises;
+
+async function fileOperations() {
+    try {
+        // Write
+        await fs.writeFile('test.txt', 'Initial content');
+        console.log('File written');
+
+        // Read
+        const data = await fs.readFile('test.txt', 'utf8');
+        console.log('Read content:', data);
+
+        // Append
+        await fs.appendFile('test.txt', '\nAppended content');
+        console.log('Content appended');
+
+        // Rename
+        await fs.rename('test.txt', 'new_name.txt');
+        console.log('File renamed');
+
+        // Delete
+        await fs.unlink('new_name.txt');
+        console.log('File deleted');
+
+    } catch (err) {
+        console.error('Error:', err);
+    }
+}
+
+fileOperations();
+
+
+
+
+
+
+
+6)
+#Write a Node JS program to demonstrate user defined modules
+
+
+
+#mathUtils.js(file_name)
+function add(a, b) {
+    return a + b;
+}
+function multiply(a, b) {
+    return a * b;
+}
+const PI = 3.1415;
+module.exports = {
+    add,
+    multiply,
+    PI
+};
+
+
+#app.js(file_name)
+const math = require('./mathUtils');
+const sum = math.add(10, 5);
+const product = math.multiply(10, 5);
+const circleConstant = math.PI;
+console.log("Sum:", sum);
+console.log("Product:", product);
+console.log("Value of PI:", circleConstant);
+
+
+
+
+
+
+
+
+
+7)
+#write a Node JS program to read form data from query string and generate response using NodeJS
+
+
+#server.js(file_name)
+const http = require('http');
+const url = require('url');
+const server = http.createServer((req, res) => {
+    const queryObject = url.parse(req.url, true).query;
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    if (queryObject.name && queryObject.age) {
+        res.end(`<h1>Hello ${queryObject.name}!</h1><p>You are ${queryObject.age} years old.</p>`);
+    } else {
+        res.end('<h1>Please provide name and age in the URL</h1><p>Example: ?name=John&age=25</p>');
+    }
+});
+server.listen(3000, () => {
+    console.log('Server running at http://localhost:3000');
+});
+
+
+
+#index.html(client side file name)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Input Form</title>
+</head>
+<body>
+    <h2>Enter Your Details</h2>
+    <form action="http://localhost:3000" method="GET">
+        <label>Name:</label>
+        <input type="text" name="name">
+        <br><br>
+        <label>Age:</label>
+        <input type="number" name="age">
+        <br><br>
+        <button type="submit">Submit to Server</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+8)
+#Write a Node JS program to demonstrate accessing static files using http webserver and client.
+
+
+#server.js(file_name)
+var fs=require('fs');
+var http=require('http');
+var url=require('url');
+var ROOT_DIR='html';
+http.createServer(function (req, res) {
+    var urlObj=url.parse(req.url, true, false);
+    fs.readFile(ROOT_DIR + urlObj.pathname, function (err, data) {
+        if (err) {
+            res.writeHead(404);
+            res.end(JSON.stringify(err));
+            return;
+        }
+        res.writeHead(200);
+        res.end(data);
+    }); 
+}).listen(5000,function(){
+    console.log("Server is running on port 5000...");
+})
+
+
+#client.js(client side file name)
+var http=require('http');
+const path = require('path');
+var options={
+    hostname:'localhost',
+    port:5000,
+    path:'/1.txt',
+};
+function handleResponse(response){
+    var serverData='';
+    response.on('data', function (chunk) {
+        serverData+=chunk;
+    });
+    response.on('end', function () {
+        console.log(serverData);
+    });
+}
+http.request(options, function (response) {
+    handleResponse(response);
+}).end();
+
+
+
+
+
+
+
+
+
+
+
+9)# Write a Node JS program to demonstrate accessing dynamic content through GET method using http
+webserver and client.
+
+
+#server.js(file_name)
+const http = require('http');
+const url = require('url');
+http.createServer((req, res) => {
+    const q = url.parse(req.url, true).query;
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    if (q.user) {
+        res.end(`<h1>Welcome, ${q.user}!</h1><p>Generated at: ${new Date()}</p>`);
+    } else {
+        res.end("<h1>No user name provided.</h1>");
+    }
+}).listen(4000);
+
+
+
+
+#form.html(client side file name)
+<!DOCTYPE html>
+<html>
+<body>
+    <form action="http://localhost:4000/greet" method="GET">
+        <input type="text" name="user" placeholder="Enter Name">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+10)
+const EventEmitter = require('events');
+
+// Create an event emitter object
+const eventEmitter = new EventEmitter();
+
+// Define an event listener
+eventEmitter.on('greet', (name) => {
+    console.log(`Hello ${name}, welcome to Node.js events!`);
+});
+
+// Trigger (emit) the event
+eventEmitter.emit('greet', 'John');
+
+function processUser(name, callback) {
+    console.log("Processing user...");
+    callback(name);
+}
+
+function greetUser(name) {
+    console.log(`Hello ${name}, welcome!`);
+}
+
+processUser("John", greetUser);
+
+
+
+
+
+
+
+
+11)
+# Write a NodeJs program to Implement a program with basic commands (CRUD) on databases and collections using MongoDB
+
+
+const { MongoClient } = require('mongodb');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+const dbName = 'myDatabase';
+async function main() {
+    await client.connect();
+    console.log('Connected to MongoDB');
+    const db = client.db(dbName);
+    const collection = db.collection('students');
+
+    await collection.insertOne({ name: "Noshank", age: 21, course: "CSE" });
+    await collection.insertMany([
+        { name: "Alice", age: 22, course: "IT" },
+        { name: "Bob", age: 23, course: "ECE" }
+    ]);
+    console.log('Documents inserted');
+
+    const allStudents = await collection.find().toArray();
+    console.log('All Students:', allStudents);
+    const oneStudent = await collection.findOne({ name: "Noshank" });
+    console.log('Single Student:', oneStudent);
+
+    await collection.updateOne(
+        { name: "Noshank" }, 
+        { $set: { age: 22 } }
+    );
+    console.log('Document updated');
+
+    await collection.deleteOne({ name: "Bob" });
+    console.log('Document deleted');
+    await client.close();
+}
+
+main().catch(console.error);
+
+
+
+
+
+
+
+
+12)
+#Perform Count, Limit, Sort, and Skip operations on the given collections using MongoDB.
+
+
+const { MongoClient } = require('mongodb');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+
+async function runDemo() {
+    try {
+        await client.connect(); // 1️⃣ Connect to MongoDB
+        const db = client.db('myDatabase');
+        const collection = db.collection('students');
+
+        // 2️⃣ Clear previous data and insert sample documents
+        await collection.deleteMany({});
+        const students = [
+            { name: "Alice", age: 20, grade: "A" },
+            { name: "Bob", age: 22, grade: "B" },
+            { name: "Charlie", age: 21, grade: "A" },
+            { name: "David", age: 23, grade: "C" }
+        ];
+        const insertResult = await collection.insertMany(students);
+        console.log("Inserted Documents:", insertResult.insertedCount);
+
+        // 3️⃣ Count documents
+        const total = await collection.countDocuments();
+        console.log("Total Documents:", total);
+
+        // 4️⃣ Sort documents by name
+        const sortedData = await collection.find().sort({ name: 1 }).toArray();
+        console.log("Sorted Data:", sortedData);
+
+        // 5️⃣ Limit to first 2 documents
+        const limitedData = await collection.find().limit(2).toArray();
+        console.log("Limited Data (First 2):", limitedData);
+
+        // 6️⃣ Skip first 2 documents
+        const skippedData = await collection.find().skip(2).toArray();
+        console.log("Skipped Data (Skipping first 2):", skippedData);
+
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        await client.close(); // 7️⃣ Always close the connection
+        console.log("Connection closed.");
+    }
+}
+
+runDemo();
