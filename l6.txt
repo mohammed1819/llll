@@ -1,0 +1,58 @@
+import random
+
+board = [" "] * 9
+
+def show():
+    print(board[0], "|", board[1], "|", board[2])
+    print("---------")
+    print(board[3], "|", board[4], "|", board[5])
+    print("---------")
+    print(board[6], "|", board[7], "|", board[8])
+
+def win(p):
+    return (
+        (board[0]==p and board[1]==p and board[2]==p) or
+        (board[3]==p and board[4]==p and board[5]==p) or
+        (board[6]==p and board[7]==p and board[8]==p) or
+        (board[0]==p and board[3]==p and board[6]==p) or
+        (board[1]==p and board[4]==p and board[7]==p) or
+        (board[2]==p and board[5]==p and board[8]==p) or
+        (board[0]==p and board[4]==p and board[8]==p) or
+        (board[2]==p and board[4]==p and board[6]==p)
+    )
+
+while " " in board:
+    show()
+
+    pos = int(input("Enter position (1-9): ")) - 1
+
+    if board[pos] != " ":
+        print("Already occupied!")
+        continue
+
+    board[pos] = "X"
+
+    if win("X"):
+        show()
+        print("You Win!")
+        break
+
+    empty = []
+    for i in range(9):
+        if board[i] == " ":
+            empty.append(i)
+
+    if len(empty) == 0:
+        show()
+        print("Draw!")
+        break
+
+    comp = random.choice(empty)
+    board[comp] = "O"
+
+    print("Computer chose:", comp + 1)
+
+    if win("O"):
+        show()
+        print("Computer Wins!")
+        break
